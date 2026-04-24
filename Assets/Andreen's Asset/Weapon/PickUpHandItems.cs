@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PickUpHandItems : MonoBehaviour
 {
@@ -35,6 +37,13 @@ public class PickUpHandItems : MonoBehaviour
     public GameObject bulletPrefab;
     public float bulletSpeed = 10;
     public int poolSize = 50;
+
+    [Header("Melee Special")]
+    public int MaxMeleeCharges=3;
+    [SerializeField] int MeleeCharges;
+    [SerializeField] GameObject MeleePrefab;
+    [SerializeField] Image[] MeleeChargesUI;
+    [SerializeField] Transform MeleeChargesUIParent;
     
     public Queue<GameObject> bulletPool = new Queue<GameObject>();
 
@@ -50,11 +59,16 @@ public class PickUpHandItems : MonoBehaviour
 
     private void Start()
     {
+        MeleeCharges = MaxMeleeCharges;
+        MeleeChargesUI = MeleeChargesUIParent.GetComponentsInChildren<Image>();
+
         handGun.SetActive(false);
         gunDetails.SetActive(false);
         input = GetComponent<InputManager>();
         ammoDetails.text = currentAmmo + "/" + maxAmmo;
         pocketAmmoText.text = pocketAmmo.ToString();
+
+
         
     }
 
@@ -79,6 +93,11 @@ public class PickUpHandItems : MonoBehaviour
         if (input.OnFoot.Reload.triggered && isGun)
         {
             HandGunReload();
+        }
+
+        if (input.OnFoot.Special.triggered && !MeleePrefab.activeInHierarchy)
+        {
+            UseMeleeAbility();
         }
     }
 
@@ -153,5 +172,28 @@ public class PickUpHandItems : MonoBehaviour
         int collect = Random.Range(10, 15);
         pocketAmmo += collect;
         pocketAmmoText.text = pocketAmmo.ToString();
+    }
+
+    public void UseMeleeAbility()
+    {
+        if (MeleeCharges>0)
+        {
+            MeleeCharges--;
+            UpdateMeleeChargesCountUI();
+            MeleePrefab.SetActive(true);
+            LeanTween.cancel(MeleePrefab);
+            LeanTween.delayedCall(4, () =>
+            {
+                MeleePrefab.SetActive(false);
+            });
+        }
+    }
+
+    public void UpdateMeleeChargesCountUI()
+    {
+        if (MeleeCharges > 3) MeleeCharges = 3;
+        
+        foreach (var charges in MeleeChargesUI) charges.gameObject.SetActive(false);
+        for (int i = 0; i < MeleeCharges; i++) MeleeChargesUI[i].gameObject.SetActive(true);
     }
 }

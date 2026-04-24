@@ -1,5 +1,4 @@
 {
-    "version": 1,
     "name": "PlayerInput",
     "maps": [
         {
@@ -55,6 +54,15 @@
                     "name": "Reload",
                     "type": "Button",
                     "id": "bf361fac-12ad-431b-bf26-9f4c15ca9071",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Special",
+                    "type": "Button",
+                    "id": "cf5f177f-88be-4458-b98d-fb90b9c94917",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -235,6 +243,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d8708fc-7b60-4149-91b3-ccf0761d97cc",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aad68e61-b36f-4438-b698-2d969fcff9d5",
+                    "path": "<DualShockGamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

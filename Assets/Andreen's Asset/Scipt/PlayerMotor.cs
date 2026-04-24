@@ -36,6 +36,7 @@ public class PlayerMotor : MonoBehaviour
     [Header("UI")]
     public GameObject menuUIBG;
     public GameObject restartUi;
+    public GameObject damagedUI;
 
 
     private void Awake()
@@ -101,6 +102,16 @@ public class PlayerMotor : MonoBehaviour
 
     public void PlayerHealthBar(float damage)
     {
+        if (damagedUI!=null)
+        {
+            LeanTween.cancel(damagedUI);
+            damagedUI.SetActive(true);
+            LeanTween.delayedCall(0.1f, () =>
+            {
+                damagedUI.SetActive(false);
+            });
+        }
+
         if(currentHealth > damage)
         {
             currentHealth -= damage;

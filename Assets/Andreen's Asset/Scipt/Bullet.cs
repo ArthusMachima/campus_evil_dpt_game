@@ -32,6 +32,7 @@ public class Bullet : MonoBehaviour
         Debug.Log("hit "+collision.gameObject);
         if (collision.gameObject.TryGetComponent<IDamagable>(out IDamagable dmg))
         {
+            Debug.Log("Attempt Damage");
             dmg.TakeDamage(damage);
         }
     }
